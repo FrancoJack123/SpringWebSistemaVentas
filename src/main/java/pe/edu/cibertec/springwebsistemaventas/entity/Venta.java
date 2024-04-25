@@ -1,11 +1,13 @@
 package pe.edu.cibertec.springwebsistemaventas.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -29,4 +31,15 @@ public class Venta {
 
     @ManyToOne
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "venta", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<DetalleVenta> detalleVentas;
+
+    public void setDetalleVentas(Set<DetalleVenta> detalleVentas) {
+        this.detalleVentas = detalleVentas;
+        for (DetalleVenta detalleVenta : detalleVentas){
+            detalleVenta.setVenta(this);
+        }
+    }
 }
