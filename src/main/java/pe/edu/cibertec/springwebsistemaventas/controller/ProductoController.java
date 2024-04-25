@@ -1,5 +1,6 @@
 package pe.edu.cibertec.springwebsistemaventas.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +31,13 @@ public class ProductoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> GuardarProducto(@RequestBody Producto producto){
+    public ResponseEntity<?> GuardarProducto(@Valid @RequestBody Producto producto){
         Producto pro = service.save(producto);
         return new ResponseEntity<>(pro, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<?> ActualizarProducto(@RequestBody Producto producto){
+    public ResponseEntity<?> ActualizarProducto(@Valid @RequestBody Producto producto){
         Producto pro = service.save(producto);
         return new ResponseEntity<>(pro, HttpStatus.CREATED);
     }
