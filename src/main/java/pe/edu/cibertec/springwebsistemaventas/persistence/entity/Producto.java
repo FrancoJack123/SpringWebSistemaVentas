@@ -1,4 +1,4 @@
-package pe.edu.cibertec.springwebsistemaventas.entity;
+package pe.edu.cibertec.springwebsistemaventas.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -19,8 +19,10 @@ public class Producto {
 
     @NotBlank(message = "El campo es requerido")
     private String nombre;
+
     @NotBlank(message = "El campo es requerido")
     private String descripcion;
+
     private Boolean estado;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

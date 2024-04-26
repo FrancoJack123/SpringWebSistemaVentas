@@ -1,7 +1,8 @@
-package pe.edu.cibertec.springwebsistemaventas.entity;
+package pe.edu.cibertec.springwebsistemaventas.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,6 +17,7 @@ public class Compra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull(message = "El campo no puede ser nulo")
     private Double totalCosto;
     private String tipoComprobante;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

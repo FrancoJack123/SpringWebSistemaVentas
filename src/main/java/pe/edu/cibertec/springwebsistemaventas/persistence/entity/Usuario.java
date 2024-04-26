@@ -1,4 +1,4 @@
-package pe.edu.cibertec.springwebsistemaventas.entity;
+package pe.edu.cibertec.springwebsistemaventas.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
