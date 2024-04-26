@@ -1,12 +1,11 @@
-package pe.edu.cibertec.springwebsistemaventas.controller;
+package pe.edu.cibertec.springwebsistemaventas.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.cibertec.springwebsistemaventas.entity.Producto;
-import pe.edu.cibertec.springwebsistemaventas.repository.ProductoRepository;
+import pe.edu.cibertec.springwebsistemaventas.persistence.entity.Producto;
 import pe.edu.cibertec.springwebsistemaventas.services.ProductoService;
 
 import java.util.List;
