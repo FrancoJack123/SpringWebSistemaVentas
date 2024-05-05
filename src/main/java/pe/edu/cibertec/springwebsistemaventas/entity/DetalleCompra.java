@@ -26,5 +26,4 @@ public class DetalleCompra {
 
     @ManyToOne
     private Producto producto;
-
 }

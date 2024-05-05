@@ -1,16 +1,17 @@
-package pe.edu.cibertec.springwebsistemaventas.services;
+package pe.edu.cibertec.springwebsistemaventas.implement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pe.edu.cibertec.springwebsistemaventas.entity.Producto;
 import pe.edu.cibertec.springwebsistemaventas.repository.ProductoRepository;
+import pe.edu.cibertec.springwebsistemaventas.services.ProductoService;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductoServiceImpl implements ProductoService{
+public class ProductoServiceImpl implements ProductoService {
 
     @Autowired
     private ProductoRepository repository;
