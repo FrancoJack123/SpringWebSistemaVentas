@@ -11,7 +11,7 @@ import pe.edu.cibertec.springwebsistemaventas.services.ProductoService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/Producto")
+@RequestMapping("/api/v1/producto")
 public class ProductoController {
 
     @Autowired
