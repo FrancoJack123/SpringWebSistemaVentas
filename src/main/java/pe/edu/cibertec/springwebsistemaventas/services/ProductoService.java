@@ -1,6 +1,6 @@
 package pe.edu.cibertec.springwebsistemaventas.services;
 
-import pe.edu.cibertec.springwebsistemaventas.entity.Producto;
+import pe.edu.cibertec.springwebsistemaventas.persistence.entity.Producto;
 
 import java.util.List;
 import java.util.Optional;
