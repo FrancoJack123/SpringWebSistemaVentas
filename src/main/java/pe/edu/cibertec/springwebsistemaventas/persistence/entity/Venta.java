@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -48,15 +49,23 @@ public class Venta {
     private Double importeCambio;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @CurrentTimestamp
     private Date fecha_registro;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Tienda tienda;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Usuario usuario;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Cliente cliente;
 
     @OneToMany(mappedBy = "venta", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -40,5 +41,6 @@ public class Proveedor {
     private String direccion;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @CurrentTimestamp
     private Date fecha_registro;
 }

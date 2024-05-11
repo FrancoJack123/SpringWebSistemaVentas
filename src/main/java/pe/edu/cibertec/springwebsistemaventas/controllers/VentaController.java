@@ -2,50 +2,107 @@ package pe.edu.cibertec.springwebsistemaventas.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.cibertec.springwebsistemaventas.persistence.entity.Producto;
+import pe.edu.cibertec.springwebsistemaventas.controllers.response.*;
+import pe.edu.cibertec.springwebsistemaventas.persistence.entity.Categoria;
+import pe.edu.cibertec.springwebsistemaventas.persistence.entity.Usuario;
 import pe.edu.cibertec.springwebsistemaventas.persistence.entity.Venta;
-import pe.edu.cibertec.springwebsistemaventas.services.VentaService;
+import pe.edu.cibertec.springwebsistemaventas.persistence.repository.ClienteRepository;
+import pe.edu.cibertec.springwebsistemaventas.persistence.repository.TiendaRepository;
+import pe.edu.cibertec.springwebsistemaventas.persistence.repository.UsuarioRepository;
+import pe.edu.cibertec.springwebsistemaventas.persistence.repository.VentaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/Venta")
+@RequestMapping("/api/v1/venta")
 public class VentaController {
 
     @Autowired
-    private VentaService service;
+    private VentaRepository ventaRepository;
+
+    @Autowired
+    private TiendaRepository tiendaRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
 
     @GetMapping
-    public ResponseEntity<?> ListarVentas(){
-        List<Venta> getList = service.getAll();
-        return new ResponseEntity<>(getList, HttpStatus.OK);
+    public FindAllResponse<Venta> ListarVentas(){
+        List<Venta> getList = ventaRepository.findAll();
+
+        if(getList.isEmpty())
+            return new FindAllResponse<>("01", "La lista se encuentra vacia", null);
+
+        return new FindAllResponse<>("01", null, getList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> BuscarVenta(@PathVariable Long id){
-        Venta venta = service.getById(id).get();
-        return new ResponseEntity<>(venta, HttpStatus.OK);
+    public FindByIdResponse<Venta> BuscarVenta(@PathVariable Long id){
+        Optional<Venta> venta = ventaRepository.findById(id);
+        if (venta.isEmpty())
+            return new FindByIdResponse<>("99", "La venta buscada no se encuentra en la base de datos", null);
+        return new FindByIdResponse<>("01", null, venta.get());
     }
 
     @PostMapping
-    public ResponseEntity<?> GuardarVenta(@Valid @RequestBody Venta venta){
-        Venta ve = service.save(venta);
-        return new ResponseEntity<>(ve, HttpStatus.CREATED);
+    public AddResponse<Venta> GuardarVenta(@Valid @RequestBody Venta venta){
+        try {
+            if (tiendaRepository.findById(venta.getTienda().getId()).isEmpty())
+                return new AddResponse<>("99", "La tienda especificada no existe", null);
+
+            if (usuarioRepository.findById(venta.getUsuario().getId()).isEmpty())
+                return new AddResponse<>("99", "El usuario especificado no existe", null);
+
+            if (clienteRepository.findById(venta.getCliente().getId()).isEmpty())
+                return new AddResponse<>("99", "El cliente especificado no existe", null);
+
+            Venta va = ventaRepository.save(venta);
+            return new AddResponse<>("01", "La venta fue registrada", null);
+        } catch (Exception e) {
+            return new AddResponse<>("99", e.getMessage(), null);
+        }
     }
 
     @PutMapping
-    public ResponseEntity<?> ActualizarVenta(@Valid @RequestBody Venta venta){
-        Venta ve = service.save(venta);
-        return new ResponseEntity<>(ve, HttpStatus.CREATED);
+    public UpdateResponse<Venta> ActualizarVenta(@Valid @RequestBody Venta venta){
+        try {
+            if (ventaRepository.findById(venta.getId()).isEmpty())
+                return new UpdateResponse<>("99", "El id de la venta no se encuentra en la base de datos", null);
+
+            if (tiendaRepository.findById(venta.getTienda().getId()).isEmpty())
+                return new UpdateResponse<>("01", "La tienda especificada no existe", null);
+
+            if (usuarioRepository.findById(venta.getUsuario().getId()).isEmpty())
+                return new UpdateResponse<>("01", "El usuario especificado no existe", null);
+
+            if (clienteRepository.findById(venta.getCliente().getId()).isEmpty())
+                return new UpdateResponse<>("01", "El cliente especificado no existe", null);
+
+            Venta va = ventaRepository.save(venta);
+            return new UpdateResponse<>("01", "La venta fue actualizada", null);
+        } catch (Exception e) {
+            return new UpdateResponse<>("99", e.getMessage(), null);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> EliminarVenta(@PathVariable Long id){
-        boolean b = service.delete(id);
-        return new ResponseEntity<>(b, HttpStatus.OK);
-    }
+    public DeleteResponse EliminarVenta(@PathVariable Long id){
+        try{
+            Optional<Venta> venta = ventaRepository.findById(id);
 
+            if (venta.isEmpty())
+                return new DeleteResponse("99", "El id de la venta no existe", "La venta no fue eliminada");
+
+            ventaRepository.deleteById(id);
+            return new DeleteResponse("01", null, "La venta fue eliminada");
+        }catch (Exception e){
+            return new DeleteResponse("01", e.getMessage(), null);
+        }
+    }
 }

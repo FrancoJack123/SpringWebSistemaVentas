@@ -1,10 +1,13 @@
 package pe.edu.cibertec.springwebsistemaventas.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,19 +26,24 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "El campo es requerido")
     private String nombres;
+    @NotBlank(message = "El campo es requerido")
     private String apellidos;
     @Column(unique = true, nullable = false)
+    @NotBlank(message = "El campo es requerido")
     private String email;
+    @NotBlank(message = "El campo es requerido")
     private String password;
-    private Boolean estado;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @CurrentTimestamp
     private Date fecha_registro;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Tienda tienda;
 
     @Override

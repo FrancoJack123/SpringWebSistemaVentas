@@ -1,10 +1,10 @@
 package pe.edu.cibertec.springwebsistemaventas.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -12,21 +12,21 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Entity
-public class Producto {
+public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotBlank(message = "El campo es requerido")
-    private String nombre;
-
+    private String nombres;
     @NotBlank(message = "El campo es requerido")
-    private String descripcion;
-
+    private String apellidos;
+    @NotBlank(message = "El campo es requerido")
+    private String direccion;
+    @NotBlank(message = "El campo es requerido")
+    private String telefono;
+    @NotBlank(message = "El campo es requerido")
+    private String dni;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @CurrentTimestamp
     private Date fecha_registro;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Categoria categoria;
 }

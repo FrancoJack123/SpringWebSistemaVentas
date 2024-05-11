@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequest ->
                         authRequest
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/auth/**").permitAll() // Permitimos el acceso a todas la ruta que empiezan en /auth/**
                                 .anyRequest().authenticated())
                 .sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
