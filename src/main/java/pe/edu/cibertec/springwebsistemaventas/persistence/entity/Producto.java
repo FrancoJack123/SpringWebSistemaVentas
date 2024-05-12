@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -24,6 +25,7 @@ public class Producto {
     private String descripcion;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @CurrentTimestamp
     private Date fecha_registro;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,6 +1,7 @@
 package pe.edu.cibertec.springwebsistemaventas.controllers;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.cibertec.springwebsistemaventas.controllers.response.*;
@@ -17,6 +18,7 @@ public class CompraController {
 
     @Autowired
     private CompraRepository compraRepository;
+
     @GetMapping
     public FindAllResponse<Compra> ListarCompras(){
         List<Compra> getList = compraRepository.findAll();
