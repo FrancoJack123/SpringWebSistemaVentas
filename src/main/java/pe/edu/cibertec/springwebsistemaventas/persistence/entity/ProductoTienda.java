@@ -3,6 +3,7 @@ package pe.edu.cibertec.springwebsistemaventas.persistence.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.validation.constraints.*;
 
@@ -28,11 +29,8 @@ public class ProductoTienda {
     @PositiveOrZero(message = "El stock debe ser un número positivo o cero")
     private Integer stock;
 
-    private Boolean estado;
-
-    private Boolean iniciado;
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @CurrentTimestamp
     private Date fecha_registro;
 
     @ManyToOne

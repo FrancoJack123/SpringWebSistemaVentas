@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -36,9 +37,8 @@ public class Tienda {
     @Pattern(regexp="\\d{9,10}", message="El teléfono debe tener entre 9 y 10 dígitos")
     private String telefono;
 
-    private Boolean estado;
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @CurrentTimestamp
     private Date fecha_registro;
 
     @OneToMany(mappedBy = "tienda", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)

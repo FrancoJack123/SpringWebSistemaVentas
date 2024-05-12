@@ -35,7 +35,7 @@ public class AuthService {
                 .build();
     }
 
-    public AuthResponse register(RegisterRequest request) {
+    public String register(RegisterRequest request) {
         Usuario user = Usuario.builder()
                 .nombres(request.getNombres())
                 .apellidos(request.getApellidos())
@@ -46,6 +46,6 @@ public class AuthService {
 
         usuarioRepository.save(user);
 
-        return AuthResponse.builder().token(jwtService.getToken(user)).build();
+        return "El usuario ha sido registrado";
     }
 }

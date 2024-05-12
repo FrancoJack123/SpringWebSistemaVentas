@@ -3,6 +3,8 @@ package pe.edu.cibertec.springwebsistemaventas.auth;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.cibertec.springwebsistemaventas.auth.request.LoginRequest;
 import pe.edu.cibertec.springwebsistemaventas.auth.request.RegisterRequest;
@@ -12,7 +14,6 @@ import pe.edu.cibertec.springwebsistemaventas.auth.service.AuthService;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {""})
 public class AuthController {
 
     private final AuthService authService;
@@ -22,8 +23,9 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request){
-        return ResponseEntity.ok(authService.register(request));
-    }
+//    @PostMapping("/register")
+//    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
+//        return ResponseEntity.ok(authService.register(request));
+//    }
+
 }
